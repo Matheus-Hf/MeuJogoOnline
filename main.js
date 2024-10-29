@@ -13,6 +13,7 @@ window.onload = () => {
 
     socket.addEventListener('open', () => {
         socket.send(JSON.stringify({ type: 'connection' }))
+        socket.send(JSON.stringify({ type: 'insideroom', roomname: 'lobby' }))
     })
     socket.addEventListener('message', (event) => {
         const data = JSON.parse(event.data)
@@ -27,6 +28,13 @@ window.onload = () => {
             connectPlayers = data.connectPlayers
             update()
         }
+    })
+
+    document.addEventListener('keydown', event => {
+        socket.send(JSON.stringify({ type: 'detectedkeys', key: event.key, state: 'down' }))
+    })
+    document.addEventListener('keyup', event => {
+        socket.send(JSON.stringify({ type: 'detectedkeys', key: event.key, state: 'up' }))
     })
 
     function update() {
