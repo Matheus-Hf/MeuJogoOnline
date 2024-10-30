@@ -1,4 +1,4 @@
-const rooms = new Map();
+export const rooms = new Map();
 
 export class Player {
     constructor(id, name, posx, posy){
@@ -15,7 +15,7 @@ export class Player {
             d: false
         }
         this.speed = 3
-        this.Room = null
+        this.Room = ""
     }
     verificarLimites(dirX, dirY, room) {
         if (this.posX <= 0 && dirX < 0) {
@@ -56,8 +56,7 @@ export class Player {
 }
 
 class room{
-    constructor(width, height, name){
-        this.name = name
+    constructor(width, height){
         this.Width = width
         this.Height = height
         this.Players = []
@@ -73,7 +72,7 @@ export function createRoom(name) {
         throw new Error("Nome da sala já existe. Escolha um nome diferente.");
     }
 
-    const newRoom = new room(600, 400, name);
+    const newRoom = new room(600, 400);
     rooms.set(name, newRoom);
 
     return newRoom;
